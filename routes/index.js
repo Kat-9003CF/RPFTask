@@ -58,4 +58,27 @@ router.post("/users", async (req, res) => {
 });
 
 
+const APIKey='secretkey';
+const user_API = process.env.KEY
+
+router.delete(`/users/:id`, async (req, res) => { 
+
+      let userId = req.params.id;
+
+    try {
+        let result = await db(`SELECT * FROM usertable WHERE id = ${userId}`);
+        if (result.data.length === 0) {
+            res.status(404).send({ error: 'User not found' });
+        } else {
+            await db(`DELETE FROM usertable WHERE id = ${userId}`);
+            let result = await db('SELECT * FROM usertable');
+            let users = result.data;
+            res.send(users);
+        }   
+    }   catch (err) {
+        res.status(500).send({ error: err.message });
+    }
+
+});
+
 module.exports = router;
