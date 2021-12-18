@@ -7,7 +7,8 @@ CREATE TABLE usertable (
     username VARCHAR(20) NOT NULL,
     email VARCHAR(100) NOT NULL,
     passwordHash BINARY(16) NOT NULL,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    active BOOLEAN DEFAULT TRUE
 );
 
 -- Insert some test data
