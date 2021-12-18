@@ -13,6 +13,6 @@ CREATE TABLE usertable (
 
 -- Insert some test data
 
-INSERT INTO usertable (username, email, passwordHash)
-VALUES
-    ('user1', 'user@email.com', 'MD5(testpass123)');
+-- INSERT INTO usertable (username, email, passwordHash)
+-- VALUES
+--     ('user1', 'user@email.com', 'MD5(testpass123)');

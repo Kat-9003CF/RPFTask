@@ -4,18 +4,22 @@ const db = require("../model/helper");
 const bodyParser = require("body-parser");
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.send({ title: 'Express' });
-});
 
-router.get("/usertable", async (req, res) => {
+router.get("/users", async (req, res) => {
+  let results = await db("SELECT * FROM usertable;");
   try {
-      let results = await db('SELECT * FROM usertable');
-      let userdetails = results.data;
-      res.send(userdetails);
+    let users = results.data;
+    if (users.length === 0) {
+      res.status(404).send({ error: "No users registered" });
+    } else {
+      res.send(users);
+    }
   } catch (err) {
-      res.status(500).send({ error: err.message });
+    res.status(500).send({ error: err.message });
   }
 });
+
+
+
 
 module.exports = router;
