@@ -5,7 +5,7 @@ test('Should equal true if username is valid', () => {
 });
 
 test('Should equal false if username empty', () => {
-    expect(validator.isValidUsername()).toBe(false);
+    expect(validator.isValidUsername('')).toBe(false);
 });
 
 test('Should equal true if password longer than 8 characters', () => {

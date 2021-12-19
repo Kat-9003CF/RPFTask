@@ -1,11 +1,11 @@
 exports.isValidUsername = (str) => {
-    return str ? true : false;
+    return str.length > 0
 }
 
 exports.isValidPass = (str) => {
-    return str.length > 8 ? true : false;
+    return str.length > 8
 }
 
 exports.isValidEmail = (str) => {
-    return str.includes('@') ? true : false;
+    return str.includes('@')
 }
