@@ -58,10 +58,10 @@ router.post("/users", async (req, res) => {
 });
 
 
-const APIKey='secretkey';
 const user_API = process.env.KEY
 
 router.delete(`/users/:id`, async (req, res) => { 
+    if (user_API === 'secretkey'){
 
       let userId = req.params.id;
 
@@ -78,6 +78,9 @@ router.delete(`/users/:id`, async (req, res) => {
     }   catch (err) {
         res.status(500).send({ error: err.message });
     }
+} else {
+    res.status(401).send({ error: 'Access Denied' });
+}
 
 });
 
