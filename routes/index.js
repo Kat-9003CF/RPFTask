@@ -9,7 +9,7 @@ exports.basic=()=>{
 }
 
 
-/* GET home page. */
+//GET all users in database.  If no users, return error.
 
 router.get("/users", async (req, res) => {
     let results = await db("SELECT * FROM usertable;");
@@ -26,7 +26,7 @@ router.get("/users", async (req, res) => {
   });
 
 
-  // GET user with ID
+  // GET user with specified ID.  If not found, return error.
 router.get("/users/:id", async (req, res) => {
     let userId = req.params.id;
 
@@ -44,7 +44,14 @@ router.get("/users/:id", async (req, res) => {
 });
 
 
-// POST new user
+/* 
+POST new user.  
+Hashes password
+Checks username is longer than 0
+checks password is longer than 8 characters
+checks email address contains @
+If not, returns error 'invalid data'
+*/
 router.post("/users", async (req, res) => {
     let { username, email, passwordHash } = req.body;
 
@@ -71,9 +78,13 @@ router.post("/users", async (req, res) => {
 });
 
 
-const user_API = process.env.KEY
-
+/*
+DELETEs the user, if the API key is correct.  If the key is not present or is incorrect
+user gets error message 'Access Denied'.
+*/
 router.delete(`/users/:id`, async (req, res) => { 
+    const user_API = process.env.KEY
+
     if (user_API === 'secretkey'){
 
       let userId = req.params.id;
