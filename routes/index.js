@@ -2,6 +2,12 @@ var express = require('express');
 var router = express.Router();
 const db = require("../model/helper");
 const bodyParser = require("body-parser");
+const validator = require('./validator')
+
+exports.basic=()=>{
+    return true;
+}
+
 
 /* GET home page. */
 
@@ -42,18 +48,25 @@ router.get("/users/:id", async (req, res) => {
 router.post("/users", async (req, res) => {
     let { username, email, passwordHash } = req.body;
 
-    let sql = `
-        INSERT INTO usertable (username, email, passwordHash)
-        VALUES ('${username}', '${email}', MD5('${passwordHash}'))
-    `;
+    if (validator.isValidUsername(username) && 
+        validator.isValidEmail(email) &&
+        validator.isValidPass(passwordHash)){
 
-    try {
-        await db(sql);
-        let result = await db('SELECT * FROM usertable');
-        let users = result.data;
-        res.status(201).send(users);
-    } catch (err) {
-        res.status(500).send({ error: err.message });
+        let sql = `
+            INSERT INTO usertable (username, email, passwordHash)
+            VALUES ('${username}', '${email}', MD5('${passwordHash}'))
+        `;
+
+        try {
+            await db(sql);
+            let result = await db('SELECT * FROM usertable');
+            let users = result.data;
+            res.status(201).send(users);
+        } catch (err) {
+            res.status(500).send({ error: err.message });
+        }
+    } else {
+        res.status(400).send({error: 'Bad request: invalid data'})
     }
 });
 
