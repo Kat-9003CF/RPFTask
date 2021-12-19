@@ -15,4 +15,6 @@ CREATE TABLE usertable (
 
 INSERT INTO usertable (username, email, passwordHash)
 VALUES
-    ('user1', 'user@email.com', 'MD5(testpass123)');
+    ('user1', 'one@email.com', 'MD5(testpass123)'),
+    ('user2', 'two@email.com', 'MD5(password1234)'),
+    ('user3', 'three@email.com', 'MD5(supersecurepassword)');
